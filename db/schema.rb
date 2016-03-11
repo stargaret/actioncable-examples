@@ -13,29 +13,37 @@
 
 ActiveRecord::Schema.define(version: 20150711103112) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "comments", force: :cascade do |t|
     t.integer  "message_id"
     t.integer  "user_id"
     t.text     "content"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["message_id"], name: "index_comments_on_message_id"
-    t.index ["user_id"], name: "index_comments_on_user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
+
+  add_index "comments", ["message_id"], name: "index_comments_on_message_id", using: :btree
+  add_index "comments", ["user_id"], name: "index_comments_on_user_id", using: :btree
 
   create_table "messages", force: :cascade do |t|
     t.integer  "user_id"
     t.string   "title"
     t.text     "content"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "index_messages_on_user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
+
+  add_index "messages", ["user_id"], name: "index_messages_on_user_id", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
+  add_foreign_key "comments", "messages"
+  add_foreign_key "comments", "users"
+  add_foreign_key "messages", "users"
 end
