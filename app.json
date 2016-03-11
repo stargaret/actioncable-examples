@@ -1,0 +1,11 @@
+{
+  "name": "Action Cable Example that works on Heroku",
+  "description": "Example application for action cable.",
+  "addons": [
+    "heroku-redis:hobby-dev",
+    "heroku-postgresql:hobby-dev"
+  ],
+  "scripts": {
+    "postdeploy": "bundle exec rake db:migrate"
+  }
+}
